@@ -129,14 +129,14 @@
             "description": "Making things pretty and usable",
             "img": "assets/img/divisi/UI-UX/01-itcupnyk-3838882282610490928_1-20260223_194129.webp",
             "leader": {
-                "name": "UI/UX Leader",
-                "instagram": "@",
+                "name": "Kurniasari Salasa",
+                "instagram": "@kurniasarisall_",
                 "email": "-",
                 "img": "assets/img/divisi/UI-UX/02-itcupnyk-3838882547489169887_2-20260223_194129.jpg"
             },
             "peasent": {
-                "name": "UI/UX Peasant",
-                "instagram": "@",
+                "name": "Fahri Hidayatullah",
+                "instagram": "@fhri_hdytllah07",
                 "email": "-",
                 "img": "assets/img/divisi/UI-UX/03-itcupnyk-3838882504094868701_3-20260223_194129.jpg"
             }
@@ -145,16 +145,22 @@
             "description": "Building the internet",
             "img": "assets/img/divisi/Web/01-itcupnyk-3838880924008260170_1-20260223_193946.webp",
             "leader": {
-                "name": "Web Leader",
-                "instagram": "@",
+                "name": "Gradiva Arya Wicaksana",
+                "instagram": "@grdv_arya",
                 "email": "-",
                 "img": "assets/img/divisi/Web/02-itcupnyk-3838881632753386777_2-20260223_193946.jpg"
             },
-            "peasent": {
-                "name": "Web Peasant",
-                "instagram": "@",
+            "peasent-1": {
+                "name": "Marvel Valensiano",
+                "instagram": "@marvel_valensiano._",
                 "email": "-",
                 "img": "assets/img/divisi/Web/03-itcupnyk-3838881674906128504_3-20260223_193946.jpg"
+            },
+            "peasent-2": {
+                "name": "Farhannivta Ramadhana",
+                "instagram": "@frhnvtaaa",
+                "email": "-",
+                "img": "assets/img/divisi/Web/04-itcupnyk-3838881589073925465_4-20260223_193946.jpg"
             }
         }
     }
