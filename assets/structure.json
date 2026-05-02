@@ -1,0 +1,45 @@
+{
+    "kingdom":{
+        "name" : "ITC UPNVYK",
+        "img" : "assets/img/308367046_462952535773289_631419435692788338_n.jpg"
+    },
+    "monarch":{
+        "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124.webp",
+        "king" : {
+            "name" : "Grace Rianty Butar Butar",
+            "email" : "-",
+            "instagram" : "-",
+            "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124.jpg"
+        },
+        "succession":{
+            "name" : "Dzaki Ghatfaan Abhipraya",
+            "email" : "-",
+            "instagram" : "-",
+            "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124(1).jpg"
+        }
+    },
+    "administrator":{
+        "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923.webp",
+        "secretary":{
+            "name" : "Nayla Saskia Zallianti",
+            "email" : "-",
+            "instagram" : "-",
+            "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923.jpg"
+        },
+        "treasury":{
+            "name" : "Dewi Rahmawati",
+            "email" : "-",
+            "instagram" : "-",
+            "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923(1).jpg"
+        }
+    },
+    "medinfo":{
+        "img" : "assets/img/01-itcupnyk-3838883818514266797_1-20260223_194450.webp",
+        "member 1" : {
+            "name" : "Muhammad Rafli Wibowo",
+            "email" : "-",
+            "instagram" : "@muhmdraflyyy",
+            "img" : "assets/img/02-itcupnyk-3838884224690638471_2-20260223_194450.jpg"
+        }
+    }
+}
