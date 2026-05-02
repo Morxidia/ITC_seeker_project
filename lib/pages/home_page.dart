@@ -4,6 +4,7 @@ import '../models/itc_structure.dart';
 import '../services/json_loader.dart';
 import '../theme.dart';
 import '../widgets/asset_image_view.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
 import 'structure_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,47 +100,60 @@ class _HomePageState extends State<HomePage> {
         ),
 
         // ── Kingdom hero image ──────────────────────────────────────
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: Stack(fit: StackFit.expand, children: [
-                // Image from JSON path — no hardcoding
-                AssetImageView(path: d.kingdom.img, fit: BoxFit.cover),
-
-                // Gradient overlay at the bottom
-                Positioned(
-                  bottom: 0, left: 0, right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, kBg.withOpacity(0.92)],
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(d.kingdom.name,
-                            style: const TextStyle(
-                              color: kTextPri, fontSize: 24,
-                              fontWeight: FontWeight.w900, letterSpacing: 0.5,
-                            )),
-                        if (d.kingdom.description.isNotEmpty) ...[
-                          const SizedBox(height: 6),
-                          Text(d.kingdom.description,
-                              style: const TextStyle(color: kTextSec, fontSize: 13)),
-                        ],
-                      ],
-                    ),
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Circular Image Container
+              Container(
+                width: 180, // Adjust size as needed
+                height: 180,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white24, width: 2), // Optional border
+                  image: DecorationImage(
+                    image: AssetImage(d.kingdom.img), //[cite: 1]
+                    fit: BoxFit.cover,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
                 ),
-              ]),
-            ),
+              ),
+              
+              const SizedBox(height: 20),
+
+              // Text Information below the circle
+              Text(
+                d.kingdom.name, //[cite: 1]
+                style: const TextStyle(
+                  color: kTextPri,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              
+              Text(
+                d.kingdom.description == "" ? lorem(paragraphs: 2, words: 100): d.kingdom.description,
+                style: const TextStyle(
+                  color: kTextPri,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              if (d.kingdom.description.isNotEmpty) ...[ //[cite: 1]
+                const SizedBox(height: 6),
+                Text(
+                  d.kingdom.description, //[cite: 1]
+                  style: const TextStyle(color: kTextSec, fontSize: 13),
+                ),
+              ],
+            ],
           ),
         ),
 

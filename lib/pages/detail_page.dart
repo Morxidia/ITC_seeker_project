@@ -197,14 +197,13 @@ class _CoverCard extends StatelessWidget {
         border: Border.all(color: kBorder),
       ),
       child: Row(children: [
-        const Icon(Icons.info_outline_rounded, color: kAccentSoft, size: 18),
         const SizedBox(width: 10),
         Expanded(
           child: Text(
             subSection.description.isNotEmpty
                 ? subSection.description
                 : 'Geser untuk melihat anggota →',
-            style: const TextStyle(color: kTextSec, fontSize: 12),
+            style: const TextStyle(color: kTextSec, fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
       ]),
@@ -228,48 +227,23 @@ class _MemberCard extends StatelessWidget {
         border: Border.all(color: kBorder),
       ),
       child: Row(children: [
-        // Thumbnail from JSON
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: AssetImageView(path: member.img, width: 52, height: 52, fit: BoxFit.cover),
-        ),
-        const SizedBox(width: 12),
-
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(member.name,
                 style: const TextStyle(
-                    color: kTextPri, fontSize: 14, fontWeight: FontWeight.w700)),
-            const SizedBox(height: 2),
+                    color: kTextPri, fontSize: 18, fontWeight: FontWeight.w700)),
             Text(member.role,
-                style: const TextStyle(color: kAccentSoft, fontSize: 11)),
+                style: const TextStyle(color: kAccentSoft, fontSize: 14)),
+            Text('email : ${member.email}',
+                style: const TextStyle(color: kTextPri, fontSize: 16, fontWeight: FontWeight.w500)),
+            Text('Instagram : ${member.instagram}',
+                style: const TextStyle(color: kTextPri, fontSize: 16, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 7),
           ]),
         ),
 
         const SizedBox(width: 8),
 
-        // Contact chips
-        Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          _chip(Icons.camera_alt_rounded, member.instagram),
-          const SizedBox(height: 4),
-          if (member.email != '-') _chip(Icons.email_rounded, member.email),
-        ]),
-      ]),
-    );
-  }
-
-  Widget _chip(IconData icon, String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-      decoration: BoxDecoration(
-        color: kAccent.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(icon, size: 10, color: kAccentSoft),
-        const SizedBox(width: 4),
-        Text(label,
-            style: const TextStyle(color: kAccentSoft, fontSize: 10)),
       ]),
     );
   }

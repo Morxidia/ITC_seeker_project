@@ -38,7 +38,7 @@ class StructurePage extends StatelessWidget {
   }
 }
 
-// ── Group section (e.g. "Sovereign") ─────────────────────────────────────────
+// Group section Pengurus and Divisions
 class _GroupSection extends StatelessWidget {
   final Group group;
   const _GroupSection({required this.group});
@@ -102,7 +102,7 @@ class _SubSectionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 240,
+        width: 200,
         decoration: BoxDecoration(
           color: kCard,
           borderRadius: BorderRadius.circular(20),
@@ -119,7 +119,7 @@ class _SubSectionCard extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             child: Stack(children: [
-              AssetImageView(path: subSection.img, height: 200, fit: BoxFit.cover),
+              Center(child: AssetImageView(path: subSection.img, height: 200, fit: BoxFit.cover)),
               // Slide count badge
               Positioned(
                 top: 10, right: 10,
