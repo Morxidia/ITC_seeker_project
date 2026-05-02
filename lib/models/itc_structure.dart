@@ -15,13 +15,17 @@ class Kingdom {
 class Member {
   final String roleKey; // e.g. "king", "secretary"
   final String name;
+  final String email;
+  final String instagram;
   final String img;
 
-  Member({required this.roleKey, required this.name, required this.img});
+  Member({required this.roleKey, required this.name, required this.email, required this.instagram, required this.img});
 
   factory Member.fromJson(String key, Map<String, dynamic> json) => Member(
         roleKey: key,
         name: json['name'] as String,
+        email: json['email'] as String,
+        instagram: json['instagram'] as String,
         img: json['img'] as String,
       );
 
@@ -44,7 +48,7 @@ class Member {
 
 /// One structural section (e.g. Monarh, Administrator)
 class StructureSection {
-  final String sectionKey; // raw key from JSON, e.g. "monarh"
+  final String sectionKey; // JSON raw Key
   final String img;        // group/preview media path
   final List<Member> members;
 
@@ -58,7 +62,7 @@ class StructureSection {
   String get title {
     switch (sectionKey.toLowerCase()) {
       case 'monarh':
-        return 'Monarki';
+        return 'King';
       case 'administrator':
         return 'Administrator';
       default:
@@ -72,7 +76,7 @@ class StructureSection {
       MediaItem(path: img, caption: title, isGroupShot: true),
     ];
     for (final m in members) {
-      items.add(MediaItem(path: m.img, caption: '${m.roleLabel}\n${m.name}'));
+      items.add(MediaItem(path: m.img, caption: '${m.roleLabel}\n${m.name}\nInstagram:${m.instagram}\nEmail:${m.email}'));
     }
     return items;
   }

@@ -91,7 +91,7 @@ class StructurePage extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.fromLTRB(24, 0, 24, 16),
             child: Text(
-              'Daftar Anggota',
+              'Daftar Pengurus Utama',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,

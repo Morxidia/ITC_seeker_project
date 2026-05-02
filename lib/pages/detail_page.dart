@@ -26,8 +26,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final slides = widget.section.allMedia; // from model, no hardcoding
-
+    final slides = widget.section.allMedia; 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -119,7 +118,7 @@ class _DetailPageState extends State<DetailPage> {
                 children: [
                   // Caption text
                   Text(
-                    slides[_currentPage].caption,
+                    '${slides[_currentPage].caption}\n',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
