@@ -1,14 +1,14 @@
 {
-    "kingdom":{
+    "ITC":{
         "name" : "ITC UPNVYK",
         "description" : "",
         "img" : "assets/img/308367046_462952535773289_631419435692788338_n.jpg"
     },
-    "Sovereign":{
-        "King":{
+    "pengurus":{
+        "ketua":{
             "img" : "assets/img/Sovereign/Throne/itcupnyk-3838887597892548463_3063266844-20260223_195124.webp",
             "description" : "Tirani yang tidak akan pernah hancur meskipun MBG berhenti",
-            "king" : {
+            "ketua" : {
                 "name" : "Grace Rianty Butar Butar",
                 "instagram" : "@graceriantyy",
                 "email" : "-",

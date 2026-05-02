@@ -68,6 +68,17 @@ flutter:
   assets:
     - assets/structure.json
     - assets/img/
+    - assets/img/Sovereign/
+    - assets/img/Sovereign/Administrator/
+    - assets/img/Sovereign/Medinfo/
+    - assets/img/Sovereign/Throne/
+    - assets/img/divisi/
+    - assets/img/divisi/AI/
+    - assets/img/divisi/CP/
+    - assets/img/divisi/Mobile/
+    - assets/img/divisi/PM/
+    - assets/img/divisi/UI-UX/
+    - assets/img/divisi/Web/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

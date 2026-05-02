@@ -1,14 +1,13 @@
+// lib/pages/detail_page.dart
 import 'package:flutter/material.dart';
 import '../models/itc_structure.dart';
-import '../widgets/media_widget.dart';
+import '../theme.dart';
+import '../widgets/asset_image_view.dart';
 
-/// Full-screen media slideshow for a single structure section.
-/// Slide 0 = section group image; slides 1..n = each member's media.
-/// Nothing is hardcoded — all paths and labels come from [section].
 class DetailPage extends StatefulWidget {
-  final StructureSection section;
+  final SubSection subSection;
 
-  const DetailPage({super.key, required this.section});
+  const DetailPage({super.key, required this.subSection});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -16,7 +15,12 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   final PageController _pageCtrl = PageController();
-  int _currentPage = 0;
+  int _current = 0;
+
+  List<Slide> get _slides => widget.subSection.slides;
+
+  void _goTo(int i) => _pageCtrl.animateToPage(i,
+      duration: const Duration(milliseconds: 350), curve: Curves.easeInOut);
 
   @override
   void dispose() {
@@ -26,214 +30,247 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final slides = widget.section.allMedia; 
+    final slides = _slides;
+    final total = slides.length;
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // ── Full-screen PageView ──────────────────────────────────
-          PageView.builder(
+      backgroundColor: kBg,
+      appBar: AppBar(
+        backgroundColor: kBg,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: kTextPri),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(widget.subSection.title,
+            style: const TextStyle(
+                color: kTextPri, fontWeight: FontWeight.w700, fontSize: 18)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Center(
+              child: Text('${_current + 1} / $total',
+                  style: const TextStyle(color: kTextMuted, fontSize: 13)),
+            ),
+          ),
+        ],
+      ),
+
+      body: Column(children: [
+        // ── Slide label / sub-title ─────────────────────────────────
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: Padding(
+            key: ValueKey(_current),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+            child: Text(slides[_current].label,
+                style: const TextStyle(color: kTextSec, fontSize: 13,
+                    fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+          ),
+        ),
+
+        // ── Image PageView ──────────────────────────────────────────
+        Expanded(
+          child: PageView.builder(
             controller: _pageCtrl,
-            itemCount: slides.length,
-            onPageChanged: (i) => setState(() => _currentPage = i),
+            itemCount: total,
+            onPageChanged: (i) => setState(() => _current = i),
             itemBuilder: (context, i) {
-              final slide = slides[i];
-              return _SlideView(
-                item: slide,
-                isActive: i == _currentPage,
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: AssetImageView(
+                    path: slides[i].img,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               );
             },
           ),
-
-          // ── Top bar (back + title) ────────────────────────────────
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  // Back button
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.black54,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white, size: 18),
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Text(
-                      widget.section.title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        shadows: [Shadow(blurRadius: 8, color: Colors.black)],
-                      ),
-                    ),
-                  ),
-                  // Page counter pill
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      '${_currentPage + 1} / ${slides.length}',
-                      style: const TextStyle(color: Colors.white, fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // ── Bottom caption & dot indicators ──────────────────────
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.black87, Colors.transparent],
-                ),
-              ),
-              padding: EdgeInsets.only(
-                left: 24,
-                right: 24,
-                bottom: MediaQuery.of(context).padding.bottom + 24,
-                top: 40,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Caption text
-                  Text(
-                    '${slides[_currentPage].caption}\n',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 18),
-
-                  // Dot indicators
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(slides.length, (i) {
-                      final isActive = i == _currentPage;
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 250),
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: isActive ? 24 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: isActive
-                              ? const Color(0xFF42A5F5)
-                              : Colors.white38,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      );
-                    }),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // ── Left / Right swipe arrows (subtle) ───────────────────
-          if (slides.length > 1) ...[
-            if (_currentPage > 0)
-              Positioned(
-                left: 8,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: _ArrowButton(
-                    icon: Icons.chevron_left_rounded,
-                    onTap: () => _pageCtrl.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    ),
-                  ),
-                ),
-              ),
-            if (_currentPage < slides.length - 1)
-              Positioned(
-                right: 8,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: _ArrowButton(
-                    icon: Icons.chevron_right_rounded,
-                    onTap: () => _pageCtrl.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Single Slide ─────────────────────────────────────────────────────────
-
-class _SlideView extends StatelessWidget {
-  final MediaItem item;
-  final bool isActive;
-
-  const _SlideView({required this.item, required this.isActive});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: MediaWidget(
-        key: ValueKey(item.path),
-        path: item.path,
-        fit: BoxFit.contain,
-        autoPlay: isActive,
-      ),
-    );
-  }
-}
-
-// ─── Arrow Button ─────────────────────────────────────────────────────────
-
-class _ArrowButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _ArrowButton({required this.icon, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 36,
-        height: 36,
-        decoration: BoxDecoration(
-          color: Colors.black45,
-          borderRadius: BorderRadius.circular(18),
         ),
-        child: Icon(icon, color: Colors.white70, size: 26),
+
+        // ── Dot indicators ──────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(total, (i) {
+              final active = i == _current;
+              return GestureDetector(
+                onTap: () => _goTo(i),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  width: active ? 24 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: active ? kAccent : kBorder,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+
+        // ── Member info card (shown for slides 1…n, not the cover) ──
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: _current > 0 && _current <= widget.subSection.members.length
+              ? _MemberCard(
+                  key: ValueKey(_current),
+                  member: widget.subSection.members[_current - 1],
+                )
+              : _CoverCard(
+                  key: const ValueKey('cover'),
+                  subSection: widget.subSection,
+                ),
+        ),
+
+        // ── Prev / Next ─────────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+          child: Row(children: [
+            Expanded(
+              child: AnimatedOpacity(
+                opacity: _current > 0 ? 1 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: OutlinedButton.icon(
+                  onPressed: _current > 0 ? () => _goTo(_current - 1) : null,
+                  icon: const Icon(Icons.arrow_back_ios_rounded, size: 13),
+                  label: const Text('Prev'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: kTextPri,
+                    side: const BorderSide(color: kBorder),
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: AnimatedOpacity(
+                opacity: _current < total - 1 ? 1 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: ElevatedButton.icon(
+                  onPressed:
+                      _current < total - 1 ? () => _goTo(_current + 1) : null,
+                  icon: const Icon(Icons.arrow_forward_ios_rounded, size: 13),
+                  label: const Text('Next'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kAccent,
+                    foregroundColor: kTextPri,
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    elevation: 4,
+                    shadowColor: kAccent.withOpacity(0.4),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
+      ]),
+    );
+  }
+}
+
+// ── Cover info card (slide 0) ─────────────────────────────────────────────────
+class _CoverCard extends StatelessWidget {
+  final SubSection subSection;
+  const _CoverCard({super.key, required this.subSection});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: kCard,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: kBorder),
       ),
+      child: Row(children: [
+        const Icon(Icons.info_outline_rounded, color: kAccentSoft, size: 18),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            subSection.description.isNotEmpty
+                ? subSection.description
+                : 'Geser untuk melihat anggota →',
+            style: const TextStyle(color: kTextSec, fontSize: 12),
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+// ── Member info card (slides 1…n) ─────────────────────────────────────────────
+class _MemberCard extends StatelessWidget {
+  final Member member;
+  const _MemberCard({super.key, required this.member});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: kCard,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: kBorder),
+      ),
+      child: Row(children: [
+        // Thumbnail from JSON
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: AssetImageView(path: member.img, width: 52, height: 52, fit: BoxFit.cover),
+        ),
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(member.name,
+                style: const TextStyle(
+                    color: kTextPri, fontSize: 14, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 2),
+            Text(member.role,
+                style: const TextStyle(color: kAccentSoft, fontSize: 11)),
+          ]),
+        ),
+
+        const SizedBox(width: 8),
+
+        // Contact chips
+        Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          _chip(Icons.camera_alt_rounded, member.instagram),
+          const SizedBox(height: 4),
+          if (member.email != '-') _chip(Icons.email_rounded, member.email),
+        ]),
+      ]),
+    );
+  }
+
+  Widget _chip(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      decoration: BoxDecoration(
+        color: kAccent.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, size: 10, color: kAccentSoft),
+        const SizedBox(width: 4),
+        Text(label,
+            style: const TextStyle(color: kAccentSoft, fontSize: 10)),
+      ]),
     );
   }
 }

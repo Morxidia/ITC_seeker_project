@@ -1,8 +1,9 @@
-import 'dart:convert';
+// lib/pages/home_page.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../models/itc_structure.dart';
-import '../utils/asset_helper.dart';
+import '../services/json_loader.dart';
+import '../theme.dart';
+import '../widgets/asset_image_view.dart';
 import 'structure_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,235 +13,159 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  ITCStructure? _structure;
+class _HomePageState extends State<HomePage> {
+  ITCStructure? _data;
   bool _loading = true;
-  late AnimationController _animCtrl;
-  late Animation<double> _fadeIn;
-  late Animation<Offset> _slideUp;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
-    _animCtrl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    );
-    _fadeIn = CurvedAnimation(parent: _animCtrl, curve: Curves.easeOut);
-    _slideUp = Tween<Offset>(begin: const Offset(0, 0.15), end: Offset.zero)
-        .animate(CurvedAnimation(parent: _animCtrl, curve: Curves.easeOut));
-    _loadStructure();
+    _load();
   }
 
-  Future<void> _loadStructure() async {
-    // Reads JSON from assets — no hardcoded data
-    final raw = await rootBundle.loadString('assets/structure.json');
-    final map = jsonDecode(raw) as Map<String, dynamic>;
-    setState(() {
-      _structure = ITCStructure.fromJson(map);
-      _loading = false;
-    });
-    _animCtrl.forward();
-  }
-
-  @override
-  void dispose() {
-    _animCtrl.dispose();
-    super.dispose();
+  Future<void> _load() async {
+    try {
+      final data = await JsonLoader.loadStructure();
+      if (mounted) setState(() { _data = data; _loading = false; });
+    } catch (e) {
+      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0B1829),
-      body: _loading ? _buildLoader() : _buildContent(),
+      backgroundColor: kBg,
+      body: _loading
+          ? const Center(child: CircularProgressIndicator(color: kAccent))
+          : _error != null
+              ? _errorView()
+              : _body(),
     );
   }
 
-  Widget _buildLoader() => const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4FC3F7)),
-      );
-
-  Widget _buildContent() {
-    final kingdom = _structure!.kingdom;
-
-    return Stack(
-      children: [
-        // Decorative gradient blobs
-        Positioned(
-          top: -80,
-          left: -60,
-          child: _gradientBlob(220, const Color(0xFF1565C0)),
+  Widget _errorView() => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(32),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        const Icon(Icons.error_outline_rounded, color: Colors.redAccent, size: 52),
+        const SizedBox(height: 16),
+        Text('Gagal memuat data\n\n$_error',
+            style: const TextStyle(color: kTextSec), textAlign: TextAlign.center),
+        const SizedBox(height: 24),
+        ElevatedButton.icon(
+          onPressed: () { setState(() { _loading = true; _error = null; }); _load(); },
+          icon: const Icon(Icons.refresh_rounded),
+          label: const Text('Coba Lagi'),
+          style: ElevatedButton.styleFrom(backgroundColor: kAccent, foregroundColor: kTextPri),
         ),
-        Positioned(
-          bottom: -60,
-          right: -40,
-          child: _gradientBlob(180, const Color(0xFF0D47A1)),
+      ]),
+    ),
+  );
+
+  Widget _body() {
+    final d = _data!;
+    final size = MediaQuery.of(context).size;
+
+    return SafeArea(
+      child: Column(children: [
+        // ── Header bar ─────────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+          child: Row(children: [
+            Container(
+              padding: const EdgeInsets.all(9),
+              decoration: BoxDecoration(
+                color: kAccent.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.people_alt_rounded, color: kAccent, size: 20),
+            ),
+            const SizedBox(width: 12),
+            // Name from JSON
+            Text(d.kingdom.name,
+                style: const TextStyle(
+                  color: kTextPri, fontSize: 20, fontWeight: FontWeight.w800,
+                  letterSpacing: 0.4,
+                )),
+          ]),
         ),
 
-        SafeArea(
-          child: FadeTransition(
-            opacity: _fadeIn,
-            child: SlideTransition(
-              position: _slideUp,
-              child: Column(
-                children: [
-                  const Spacer(flex: 2),
+        const SizedBox(height: 4),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Divider(color: kBorder),
+        ),
 
-                  // ── Logo ──────────────────────────────────────────
-                  _LogoRing(imagePath: kingdom.img),
+        // ── Kingdom hero image ──────────────────────────────────────
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: Stack(fit: StackFit.expand, children: [
+                // Image from JSON path — no hardcoding
+                AssetImageView(path: d.kingdom.img, fit: BoxFit.cover),
 
-                  const SizedBox(height: 32),
-
-                  // ── Club name ─────────────────────────────────────
-                  Text(
-                    kingdom.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 2,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  const Text(
-                    'Information Technology Club',
-                    style: TextStyle(
-                      color: Color(0xFF90CAF9),
-                      fontSize: 13,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-
-                  const Spacer(flex: 3),
-
-                  // ── CTA Button ────────────────────────────────────
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: _StructureButton(
-                      onTap: () => Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (_, anim, __) =>
-                              StructurePage(structure: _structure!),
-                          transitionsBuilder: (_, anim, __, child) =>
-                              FadeTransition(opacity: anim, child: child),
-                        ),
+                // Gradient overlay at the bottom
+                Positioned(
+                  bottom: 0, left: 0, right: 0,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.transparent, kBg.withOpacity(0.92)],
                       ),
                     ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(d.kingdom.name,
+                            style: const TextStyle(
+                              color: kTextPri, fontSize: 24,
+                              fontWeight: FontWeight.w900, letterSpacing: 0.5,
+                            )),
+                        if (d.kingdom.description.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          Text(d.kingdom.description,
+                              style: const TextStyle(color: kTextSec, fontSize: 13)),
+                        ],
+                      ],
+                    ),
                   ),
+                ),
+              ]),
+            ),
+          ),
+        ),
 
-                  const Spacer(flex: 1),
-                ],
+        // ── CTA ────────────────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => StructurePage(structure: d))),
+              icon: const Icon(Icons.account_tree_rounded, size: 20),
+              label: const Text('Lihat Struktur ITC',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: kAccent,
+                foregroundColor: kTextPri,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                elevation: 6,
+                shadowColor: kAccent.withOpacity(0.4),
               ),
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _gradientBlob(double size, Color color) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color.withOpacity(0.18),
-        ),
-      );
-}
-
-// ─── Logo Ring ─────────────────────────────────────────────────────────────
-
-class _LogoRing extends StatelessWidget {
-  final String imagePath;
-  const _LogoRing({required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: const LinearGradient(
-          colors: [Color(0xFF42A5F5), Color(0xFF1565C0)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF1E88E5).withOpacity(0.5),
-            blurRadius: 40,
-            spreadRadius: 8,
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(4),
-      child: ClipOval(
-        child: Image.asset(
-          toAssetPath(imagePath),
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
-            color: const Color(0xFF1A3A5C),
-            child: const Icon(Icons.image_not_supported_rounded,
-                color: Colors.white38, size: 64),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Structure Button ──────────────────────────────────────────────────────
-
-class _StructureButton extends StatelessWidget {
-  final VoidCallback onTap;
-  const _StructureButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 18),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.circular(36),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF1E88E5).withOpacity(0.4),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.account_tree_rounded, color: Colors.white, size: 20),
-            SizedBox(width: 10),
-            Text(
-              'Lihat Struktur ITC',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ],
-        ),
-      ),
+      ]),
     );
   }
 }
