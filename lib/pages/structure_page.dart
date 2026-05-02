@@ -54,7 +54,7 @@ class StructurePage extends StatelessWidget {
 
           // Horizontal scroll of section cards
           SizedBox(
-            height: 340,
+            height: 320,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -85,7 +85,7 @@ class StructurePage extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 25),
 
           // Members summary list
           const Padding(
@@ -148,7 +148,7 @@ class _SectionCard extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
               child: SizedBox(
-                height: 210,
+                height: 250,
                 width: double.infinity,
                 child: Stack(
                   fit: StackFit.expand,

@@ -1,45 +1,161 @@
 {
     "kingdom":{
         "name" : "ITC UPNVYK",
+        "description" : "",
         "img" : "assets/img/308367046_462952535773289_631419435692788338_n.jpg"
     },
-    "monarch":{
-        "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124.webp",
-        "king" : {
-            "name" : "Grace Rianty Butar Butar",
-            "email" : "-",
-            "instagram" : "-",
-            "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124.jpg"
+    "Sovereign":{
+        "King":{
+            "img" : "assets/img/Sovereign/Throne/itcupnyk-3838887597892548463_3063266844-20260223_195124.webp",
+            "description" : "Tirani yang tidak akan pernah hancur meskipun MBG berhenti",
+            "king" : {
+                "name" : "Grace Rianty Butar Butar",
+                "instagram" : "@graceriantyy",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Throne/itcupnyk-3838887597892548463_3063266844-20260223_195124.jpg"
+            },
+            "succession":{
+                "name" : "Dzaki Ghatfaan Abhipraya",
+                "instagram" : "@xaki_to",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Throne/itcupnyk-3838887597892548463_3063266844-20260223_195124(1).jpg"
+            }
         },
-        "succession":{
-            "name" : "Dzaki Ghatfaan Abhipraya",
-            "email" : "-",
-            "instagram" : "-",
-            "img" : "assets/img/itcupnyk-3838887597892548463_3063266844-20260223_195124(1).jpg"
+        "administrator":{
+            "img" : "assets/img/Sovereign/Administrator/itcupnyk-3838886578953461363_3063266844-20260223_194923.webp",
+            "description" : "I don't really know what they're doing except taking our money (really)",
+            "secretary":{
+                "name" : "Nayla Saskia Zallianti",
+                "instagram" : "@naylasaskiaaa",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Administrator/itcupnyk-3838886578953461363_3063266844-20260223_194923.jpg"
+            },
+            "treasury":{
+                "name" : "Dewi Rahmawati",
+                "instagram" : "@dewsynn",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Administrator/itcupnyk-3838886578953461363_3063266844-20260223_194923(1).jpg"
+            }
+        },
+        "medinfo":{
+            "img" : "assets/img/Sovereign/Medinfo/01-itcupnyk-3838883818514266797_1-20260223_194450.webp",
+            "description" : "yeah they make quite a good design (sometime)",
+            "medinfo-1" : {
+                "name" : "Muhammad Rafli Wibowo",
+                "instagram" : "@muhmdraflyyy",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Medinfo/02-itcupnyk-3838884224690638471_2-20260223_194450.jpg"
+            },
+            "medinfo-2" : {
+                "name" : "Satya Dio Putranto",
+                "instagram" : "@diooo_o_",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Medinfo/03-itcupnyk-3838884136668965840_3-20260223_194450.jpg"
+            },
+            "medinfo-3" : {
+                "name" : "Wilda Nafi’an",
+                "instagram" : "@navianwldn",
+                "email" : "-",
+                "img" : "assets/img/Sovereign/Medinfo/04-itcupnyk-3838884178100349199_4-20260223_194450.jpg"
+            }
         }
     },
-    "administrator":{
-        "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923.webp",
-        "secretary":{
-            "name" : "Nayla Saskia Zallianti",
-            "email" : "-",
-            "instagram" : "-",
-            "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923.jpg"
+    "division":{
+        "ai": {
+            "description": "Artificial Intelligence explorers",
+            "img": "assets/img/divisi/AI/01-itcupnyk-3838877855791032812_1-20260223_193241.webp",
+            "leader": {
+                "name": "Bintang Ramadhan",
+                "instagram": "@tangrmdhn",
+                "email": "-",
+                "img": "assets/img/divisi/AI/02-itcupnyk-3838878062914150926_2-20260223_193241.jpg"
+            },
+            "peasent": {
+                "name": "Muhammad Dimas Setiaji",
+                "instagram": "@mdimassetiaji",
+                "email": "-",
+                "img": "assets/img/divisi/AI/03-itcupnyk-3838878109823228174_3-20260223_193241.jpg"
+            }
         },
-        "treasury":{
-            "name" : "Dewi Rahmawati",
-            "email" : "-",
-            "instagram" : "-",
-            "img" : "assets/img/itcupnyk-3838886578953461363_3063266844-20260223_194923(1).jpg"
-        }
-    },
-    "medinfo":{
-        "img" : "assets/img/01-itcupnyk-3838883818514266797_1-20260223_194450.webp",
-        "member 1" : {
-            "name" : "Muhammad Rafli Wibowo",
-            "email" : "-",
-            "instagram" : "@muhmdraflyyy",
-            "img" : "assets/img/02-itcupnyk-3838884224690638471_2-20260223_194450.jpg"
+        "competitive_programming": {
+            "description": "Code fast or die trying",
+            "img": "assets/img/divisi/CP/01-itcupnyk-3838880000875506587_1-20260223_193721.webp",
+            "leader": {
+                "name": "Mochamad Rizal Ardiansyah  Sucipno ",
+                "instagram": "@rizalards_",
+                "email": "-",
+                "img": "assets/img/divisi/CP/02-itcupnyk-3838880450077120368_2-20260223_193721.jpg"
+            },
+            "peasent": {
+                "name": "Filipus Satrio Dewaki Tyasing Suryo",
+                "instagram": "@satrio._.dewaki",
+                "email": "-",
+                "img": "assets/img/divisi/CP/03-itcupnyk-3838880400483622748_3-20260223_193721.jpg"
+            }
+        },
+        "mobile": {
+            "description": "Creating apps for your pocket",
+            "img": "assets/img/divisi/Mobile/01-itcupnyk-3838878894913061676_1-20260223_193447.webp",
+            "leader": {
+                "name": "Bintoro",
+                "instagram": "@_linkebin",
+                "email": "-",
+                "img": "assets/img/divisi/Mobile/02-itcupnyk-3838879107966900823_2-20260223_193447.jpg"
+            },
+            "peasent": {
+                "name": "Ikhsan Fillah Hidayat ",
+                "instagram": "@ikhsannflh",
+                "email": "-",
+                "img": "assets/img/divisi/Mobile/03-itcupnyk-3838879148794255032_3-20260223_193447.jpg"
+            }
+        },
+        "project_management": {
+            "description": "Organizing the chaos",
+            "img": "assets/img/divisi/PM/01-itcupnyk-3838877054989343941_1-20260223_193110.webp",
+            "leader": {
+                "name": "Kurniasari Salasa",
+                "instagram": "@kurniasarisall_",
+                "email": "-",
+                "img": "assets/img/divisi/PM/02-itcupnyk-3838877303359233615_2-20260223_193110.jpg"
+            },
+            "peasent": {
+                "name": "Fahri Hidayatullah",
+                "instagram": "@fhri_hdytllah07",
+                "email": "-",
+                "img": "assets/img/divisi/PM/03-itcupnyk-3838877353011424294_3-20260223_193110.jpg"
+            }
+        },
+        "ui_ux": {
+            "description": "Making things pretty and usable",
+            "img": "assets/img/divisi/UI-UX/01-itcupnyk-3838882282610490928_1-20260223_194129.webp",
+            "leader": {
+                "name": "UI/UX Leader",
+                "instagram": "@",
+                "email": "-",
+                "img": "assets/img/divisi/UI-UX/02-itcupnyk-3838882547489169887_2-20260223_194129.jpg"
+            },
+            "peasent": {
+                "name": "UI/UX Peasant",
+                "instagram": "@",
+                "email": "-",
+                "img": "assets/img/divisi/UI-UX/03-itcupnyk-3838882504094868701_3-20260223_194129.jpg"
+            }
+        },
+        "web": {
+            "description": "Building the internet",
+            "img": "assets/img/divisi/Web/01-itcupnyk-3838880924008260170_1-20260223_193946.webp",
+            "leader": {
+                "name": "Web Leader",
+                "instagram": "@",
+                "email": "-",
+                "img": "assets/img/divisi/Web/02-itcupnyk-3838881632753386777_2-20260223_193946.jpg"
+            },
+            "peasent": {
+                "name": "Web Peasant",
+                "instagram": "@",
+                "email": "-",
+                "img": "assets/img/divisi/Web/03-itcupnyk-3838881674906128504_3-20260223_193946.jpg"
+            }
         }
     }
 }

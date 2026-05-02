@@ -76,7 +76,12 @@ class StructureSection {
       MediaItem(path: img, caption: title, isGroupShot: true),
     ];
     for (final m in members) {
-      items.add(MediaItem(path: m.img, caption: '${m.roleLabel}\n${m.name}\nInstagram:${m.instagram}\nEmail:${m.email}'));
+      if(m.roleKey.contains("medinfo")){
+        items.add(MediaItem(path: m.img, caption: '${m.name}\nInstagram:${m.instagram}\nEmail:${m.email}'));
+      }
+      else{
+        items.add(MediaItem(path: m.img, caption: '${m.roleLabel}\n${m.name}\nInstagram:${m.instagram}\nEmail:${m.email}'));
+      }
     }
     return items;
   }
