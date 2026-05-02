@@ -98,8 +98,38 @@ class Group {
     for (final entry in json.entries) {
       if (entry.value is! Map<String, dynamic>) continue;
       final child = entry.value as Map<String, dynamic>;
+      String newKey = entry.key;
+      switch (newKey) {
+      case 'ketua':
+        newKey = "Tirani"; 
+        break; 
+      case 'administrator':
+        newKey = "Administrator"; 
+        break;
+      case 'medinfo':
+        newKey = "Media & Informasi"; 
+        break; 
+      case 'ai':
+        newKey = "AI/ML"; 
+        break; 
+      case 'competitive_programming':
+        newKey = "Competitive Programing"; 
+        break;
+      case 'web':
+        newKey = "Web Dev"; 
+        break; 
+      case 'mobile':
+        newKey = "Mobile"; 
+        break;
+      case 'project_management':
+        newKey = "Project Management"; 
+        break;
+      case 'ui_ux':
+        newKey = "UI/UX"; 
+        break;
+      }
       if (child.containsKey('img')) {
-        subSections.add(SubSection.fromJson(entry.key, child));
+        subSections.add(SubSection.fromJson(newKey, child));
       }
     }
     return Group(title: title, subSections: subSections);
@@ -139,6 +169,7 @@ class ITCStructure {
     for (final entry in json.entries) {
       if (entry.key == 'ITC') continue;
       if (entry.value is! Map<String, dynamic>) continue;
+    
       groups.add(Group.fromJson(entry.key, entry.value as Map<String, dynamic>));
     }
 

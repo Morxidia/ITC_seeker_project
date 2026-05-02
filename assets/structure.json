@@ -1,7 +1,7 @@
 {
     "ITC":{
         "name" : "ITC UPNVYK",
-        "description" : ":lorem",
+        "description" : "",
         "img" : "assets/img/308367046_462952535773289_631419435692788338_n.jpg"
     },
     "pengurus":{
@@ -70,7 +70,7 @@
                 "email": "-",
                 "img": "assets/img/divisi/AI/02-itcupnyk-3838878062914150926_2-20260223_193241.jpg"
             },
-            "peasent": {
+            "Co-leaders": {
                 "name": "Muhammad Dimas Setiaji",
                 "instagram": "@mdimassetiaji",
                 "email": "-",
@@ -86,7 +86,7 @@
                 "email": "-",
                 "img": "assets/img/divisi/CP/02-itcupnyk-3838880450077120368_2-20260223_193721.jpg"
             },
-            "peasent": {
+            "Co-leaders": {
                 "name": "Filipus Satrio Dewaki Tyasing Suryo",
                 "instagram": "@satrio._.dewaki",
                 "email": "-",
@@ -102,7 +102,7 @@
                 "email": "-",
                 "img": "assets/img/divisi/Mobile/02-itcupnyk-3838879107966900823_2-20260223_193447.jpg"
             },
-            "peasent": {
+            "Co-leaders": {
                 "name": "Ikhsan Fillah Hidayat ",
                 "instagram": "@ikhsannflh",
                 "email": "-",
@@ -118,7 +118,7 @@
                 "email": "-",
                 "img": "assets/img/divisi/PM/02-itcupnyk-3838877303359233615_2-20260223_193110.jpg"
             },
-            "peasent": {
+            "Co-leaders": {
                 "name": "Fahri Hidayatullah",
                 "instagram": "@fhri_hdytllah07",
                 "email": "-",
@@ -134,7 +134,7 @@
                 "email": "-",
                 "img": "assets/img/divisi/UI-UX/02-itcupnyk-3838882547489169887_2-20260223_194129.jpg"
             },
-            "peasent": {
+            "Co-leaders": {
                 "name": "Fahri Hidayatullah",
                 "instagram": "@fhri_hdytllah07",
                 "email": "-",
@@ -150,13 +150,13 @@
                 "email": "-",
                 "img": "assets/img/divisi/Web/02-itcupnyk-3838881632753386777_2-20260223_193946.jpg"
             },
-            "peasent-1": {
+            "Co-leaders-1": {
                 "name": "Marvel Valensiano",
                 "instagram": "@marvel_valensiano._",
                 "email": "-",
                 "img": "assets/img/divisi/Web/03-itcupnyk-3838881674906128504_3-20260223_193946.jpg"
             },
-            "peasent-2": {
+            "Co-leaders-2": {
                 "name": "Farhannivta Ramadhana",
                 "instagram": "@frhnvtaaa",
                 "email": "-",

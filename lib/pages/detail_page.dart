@@ -70,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
 
-        // ── Image PageView ──────────────────────────────────────────
+        // Page View image
         Expanded(
           child: PageView.builder(
             controller: _pageCtrl,
@@ -91,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
 
-        // ── Dot indicators ──────────────────────────────────────────
+        // Dot
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
@@ -116,7 +116,6 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
 
-        // ── Member info card (shown for slides 1…n, not the cover) ──
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: _current > 0 && _current <= widget.subSection.members.length
@@ -130,7 +129,6 @@ class _DetailPageState extends State<DetailPage> {
                 ),
         ),
 
-        // ── Prev / Next ─────────────────────────────────────────────
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
           child: Row(children: [
@@ -181,7 +179,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 }
 
-// ── Cover info card (slide 0) ─────────────────────────────────────────────────
+// Card Widget cover
 class _CoverCard extends StatelessWidget {
   final SubSection subSection;
   const _CoverCard({super.key, required this.subSection});
@@ -211,7 +209,7 @@ class _CoverCard extends StatelessWidget {
   }
 }
 
-// ── Member info card (slides 1…n) ─────────────────────────────────────────────
+// Member card Meta Information
 class _MemberCard extends StatelessWidget {
   final Member member;
   const _MemberCard({super.key, required this.member});
@@ -226,6 +224,7 @@ class _MemberCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: kBorder),
       ),
+      // Member information in every section, below the card main image
       child: Row(children: [
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

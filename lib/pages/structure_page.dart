@@ -170,17 +170,6 @@ class _SubSectionCard extends StatelessWidget {
                     children: subSection.members.map((m) => Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Row(children: [
-                        Container(
-                          width: 28, height: 28,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: kSurface,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: AssetImageView(path: m.img, fit: BoxFit.cover),
-                          ),
-                        ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Column(
@@ -190,12 +179,12 @@ class _SubSectionCard extends StatelessWidget {
                               Text(m.name,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                    color: kTextPri, fontSize: 10,
+                                    color: kTextPri, fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   )),
                               Text(m.role,
                                   style: const TextStyle(
-                                    color: kAccentSoft, fontSize: 9,
+                                    color: kAccentSoft, fontSize: 10,
                                   )),
                             ],
                           ),

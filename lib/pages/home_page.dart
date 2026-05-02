@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
               ),
               
               Text(
-                d.kingdom.description == "" ? lorem(paragraphs: 2, words: 100): d.kingdom.description,
+                d.kingdom.description == "" ? lorem(paragraphs: 2, words: 100) : d.kingdom.description,
                 style: const TextStyle(
                   color: kTextPri,
                   fontSize: 16,
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
 
-        // ── CTA ────────────────────────────────────────────────────
+        // 
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
           child: SizedBox(
